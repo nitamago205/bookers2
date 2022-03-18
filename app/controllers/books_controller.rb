@@ -1,11 +1,9 @@
 class BooksController < ApplicationController
-  def new
-  end
-
   def index
     @book = Book.new
     @books = Book.all
     @user = current_user
+    
   end
 
   def create
@@ -15,7 +13,9 @@ class BooksController < ApplicationController
     if @book.save
       redirect_to book_path(@book.id), notice:'Welcome! You have signed up successfully.'
     else
-      render :books_path
+      @books = Book.all
+      @user = current_user
+      render :index
     end
   end
 
@@ -27,14 +27,24 @@ class BooksController < ApplicationController
 
   def edit
     @book = Book.find(params[:id])
+    if @book.user == current_user
+       render "edit"
+    else
+       redirect_to books_path
+    end
   end
-  
+
   def update
-    book = Book.find(params[:id])
-    book.update(book_params)
-    redirect_to book_path(book.id), notice: 'You have updated book successfully.'
+    @book = Book.find(params[:id])
+    @book.update(book_params)
+    if @book.save
+      redirect_to book_path(@book.id), notice:'You have updated book successfully.'
+    else
+      @user = current_user
+      render :edit
+    end
   end
-  
+
   def destroy
     @book = Book.find(params[:id])
     @book.destroy
