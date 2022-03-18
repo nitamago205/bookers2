@@ -15,13 +15,11 @@
     <div class="col-md-3">
       <h2>User info</h2>
       <%= image_tag user.get_profile_image(63,63) %>
-      <!--<img class="attachment user profile_image fallback" src="/assets/no_image-72379a4da21cb04a58337cf92d85bc39f8d534cbc78254c2085acaca82236bfa.jpg">-->
       <table class="table">
        <tbody>
         <tr></tr>
         <tr>
 	       <th>name</th>
-	       <!--TODO:@userではbooks/:idを拾ってしまう。-->
 	       <th><%= user.name %></th>
         </tr>
         <tr>
